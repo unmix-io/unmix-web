@@ -8138,6 +8138,13 @@ vue-router@^3.0.3:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.6.tgz#2e4f0f9cbb0b96d0205ab2690cfe588935136ac3"
   integrity sha512-Ox0ciFLswtSGRTHYhGvx2L44sVbTPNS+uD2kRISuo8B39Y79rOo0Kw0hzupTmiVtftQYCZl87mwldhh2L9Aquw==
 
+vue-slide-bar@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/vue-slide-bar/-/vue-slide-bar-1.1.9.tgz#b8048fa1f747e892c0268fb4ded7627bcd75326b"
+  integrity sha512-eRFuECvu2+iu1bQ/BGRZkziM9A8ck6rYhVPGvIOgyZDOb0a0+VQy+3eNLNfm1DVz9e659CS7fEP+F6RV2/cM+A==
+  dependencies:
+    vue "^2.5.2"
+
 vue-style-loader@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -8166,7 +8173,7 @@ vue2-dropzone@^3.5.9:
   dependencies:
     dropzone "^5.5.1"
 
-vue@^2.6.10:
+vue@^2.5.2, vue@^2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==

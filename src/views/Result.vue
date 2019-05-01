@@ -4,9 +4,40 @@
         <p>Your file <i>{{result.result.name}}</i> has been processed - here are the results:</p>
         
         <div class="player">
-            <audio v-bind:src="result.result.vocals" controls></audio>
-            <audio v-bind:src="result.result.instrumental" controls></audio>
+            <a class="btn" @click="toggleBoth">
+                <font-awesome-icon v-show="!playing" icon="play-circle" size="7x" />
+                <font-awesome-icon v-show="playing" icon="pause-circle" size="7x" />
+            </a>
+            <div class="slider">
+                <div>
+                    <VueSlideBar
+                        v-model="sliderValue"
+                        :min="0"
+                        :max="100"
+                        :lineHeight="13"
+                        :labelStyles="{ color: '#4a4a4a', backgroundColor: '#FFFFFF' }"
+                        :processStyle="{ backgroundColor: '#2F3E4E' }"
+                        @input="sliderChanged">
+                        <template slot="tooltip" slot-scope="tooltip">
+                            <div class="tooltip-drag">
+                                Drag me!
+                            </div>
+                        </template>
+                    </VueSlideBar>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-default" @click="showIndividual = !showIndividual">Play individual files</button>
+            <div v-show="showIndividual">
+                <audio ref="audioVocals" v-bind:src="result.result.vocals" controls></audio>
+                <audio ref="audioInstrumental" v-bind:src="result.result.instrumental" controls></audio>
+            </div>
+            
+            
         </div>
+        <br>
+        <hr>
+        <br>
         <div class="result-download">
             <a v-bind:href="result.result.vocals" target="_blank">
                 <font-awesome-icon icon="microphone" size="5x" />
@@ -33,18 +64,45 @@ export default {
   created() {
       if(!this.$store.state.result)
         this.$store.dispatch('loadResult', this.$route.params.id)
+  },
+  methods: {
+    sliderChanged: function(value) {
+        var volumeVocals = Math.min((100 - value) * 2 / 100, 1);
+        var volumeInstrumental = Math.min(value * 2 / 100, 1);
+        this.$refs.audioVocals.volume = volumeVocals;
+        this.$refs.audioInstrumental.volume = volumeInstrumental;
+    },
+    toggleBoth: function() {
+        if(this.playing)
+            this.pauseBoth();
+        else
+            this.playBoth();
+    },
+    playBoth: function(){
+        // Seek to the same position
+        this.$refs.audioInstrumental.currentTime = this.$refs.audioVocals.currentTime;
+        this.$refs.audioVocals.play();
+        this.$refs.audioInstrumental.play();
+        this.playing = true;
+    },
+    pauseBoth: function() {
+        this.$refs.audioVocals.pause();
+        this.$refs.audioInstrumental.pause();
+        this.playing = false;
+    }
+  },
+  data() {
+      return {
+        sliderValue: 50,
+        showIndividual: false,
+        playing: false
+      };
   }
 }
 
 </script>
 
 <style lang="scss">
-#dropzone { 
-    border-radius: 10px;
-    border: 3px dashed #2c3e50;
-    background:none;
-}
-
 .result-download { display:flex; width:100%; align-items:stretch; justify-content: center; border-radius:15px; }
 .result-download > a {
     width:50%;
@@ -66,4 +124,10 @@ export default {
         text-decoration: none;
     }
 }
+// .slider { display:flex; width:100%; flex:100px 500px 100px; align-items:stretch; }
+// .slider > div { flex-grow:1; }
+// .slider > svg { position:relative; top:6px; }
+
+.tooltip-drag { width:100px; height:28px; top:-8px; background: #FEFEFE; position:relative; }
+.tooltip-drag:after { content:' '; position:absolute; top:28px; left:50%; margin-left:-10px; border:10px solid #FFF; border-color:#FFF transparent transparent transparent; }
 </style>

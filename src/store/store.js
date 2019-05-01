@@ -12,6 +12,14 @@ const store = new Vuex.Store({
             return service.get(`result/${identifier}/response`)
                 .then(r => store.commit('newResult', r.body))
                 .catch(e => alert('We were not able to load your result. Please try again later.'))
+        },
+        fromYoutube(state, youtubeUrl) {
+            return service.post(`predict/youtube?link=${youtubeUrl}`)
+                .then(r => { 
+                    store.commit('newResult', r.body);
+                    return r.body;
+                })
+                .catch(e => alert('We were not able to load your result. Please try again later.'))
         }
     },
     mutations: {
