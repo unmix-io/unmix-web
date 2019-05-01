@@ -78,9 +78,9 @@ export default {
         else
             this.playBoth();
     },
-    playBoth: function(){
+    playBoth: function() {
         // Seek to the same position
-        this.$refs.audioInstrumental.currentTime = this.$refs.audioVocals.currentTime;
+        this.$refs.audioVocals.currentTime = this.$refs.audioInstrumental.currentTime = 0;
         this.$refs.audioVocals.play();
         this.$refs.audioInstrumental.play();
         this.playing = true;
