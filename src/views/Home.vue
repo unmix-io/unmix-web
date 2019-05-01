@@ -44,7 +44,7 @@ export default {
   data: function () {
     return {
       dropzoneOptions: {
-          url: 'http://192.168.1.16:5000/predict/file',
+          url: 'http://51.154.102.220:5000/predict/file',
           maxFilesize: 20,
           acceptedFiles: 'audio/wav,audio/mpeg,.mp3,.wav,.amr',
           sending: (file, xhr, formData) => {
