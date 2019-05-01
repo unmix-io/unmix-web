@@ -1,6 +1,20 @@
 <template>
   <div class="home">
-    <vue2-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue2-dropzone>
+    <div class="loading" v-show="loading">
+      <loading-progress
+        :progress="progress"
+        :indeterminate="indeterminate"
+        :counter-clockwise="false"
+        :hide-background="false"
+        shape="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80"
+        size="180"
+        fill-duration="2"
+      />
+      <p>Please wait, our brain is working!</p>
+    </div>
+    <div class="chooser" v-show="!loading">
+      <vue2-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue2-dropzone>
+    </div>
   </div>
 </template>
 
@@ -16,17 +30,29 @@ export default {
   data: function () {
     return {
       dropzoneOptions: {
-          url: 'https://httpbin.org/post',
+          url: 'http://192.168.1.16:5000/predict/file',
           maxFilesize: 20,
-          headers: { "My-Awesome-Header": "header value" },
           acceptedFiles: 'audio/wav,audio/mpeg,.mp3,.wav',
-          complete: (file, done) => {
-            this.$router.push('/result/7djl47odhoi3od7')
+          sending: (file, xhr, formData) => {
+            this.loading = true;
+          },
+          success: (file, response) => {
+            this.$store.commit('newResult', response)
+            this.$router.push(`/result/${response.identifier}`)
+          },
+          uploadprogress: (file, progress) => {
+            if(progress == 100)
+              this.indeterminate = true;
+            this.progress = progress;
           }
-      }
+      },
+      loading: false,
+      indeterminate: false,
+      progress: 0
     }
   }
 }
+
 </script>
 
 <style lang="scss">

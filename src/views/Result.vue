@@ -1,15 +1,22 @@
 <template>
   <div class="result">
-    <p>Your file <i>Viva_La_Vida.mp3</i> has been processed - here are the results:</p>
-    <div class="result-download">
-        <a href="#">
-            <font-awesome-icon icon="microphone" size="5x" />
-            <p>Download Vocals</p>
-        </a>
-        <a href="#">
-            <font-awesome-icon icon="music" size="5x" />
-            <p>Download Instrumentals</p>
-        </a>
+    <div v-if="result">
+        <p>Your file <i>{{result.result.name}}</i> has been processed - here are the results:</p>
+        
+        <div class="player">
+            <audio v-bind:src="result.result.vocals" controls></audio>
+            <audio v-bind:src="result.result.instrumental" controls></audio>
+        </div>
+        <div class="result-download">
+            <a v-bind:href="result.result.vocals" target="_blank">
+                <font-awesome-icon icon="microphone" size="5x" />
+                <p>Download Vocals</p>
+            </a>
+            <a v-bind:href="result.result.instrumental" target="_blank">
+                <font-awesome-icon icon="music" size="5x" />
+                <p>Download Instrumentals</p>
+            </a>
+        </div>
     </div>
     <br><br>
     <router-link to="/">Another try?</router-link>
@@ -17,6 +24,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
+export default {
+  computed: mapState({
+    result: state => state.result
+  }),
+  created() {
+      if(!this.$store.state.result)
+        this.$store.dispatch('loadResult', this.$route.params.id)
+  }
+}
 
 </script>
 

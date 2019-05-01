@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="header">
-      <img class="logo" alt="Vue logo" src="./assets/logo-invert.svg">
+      <router-link to="/"><img class="logo" alt="Vue logo" src="./assets/logo-invert.svg"></router-link>
       <p class="slogan">An AI-Driven accapella and instrumental separator</p>
     </div>
     <div class="panel">
