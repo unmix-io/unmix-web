@@ -11,7 +11,14 @@
         </b-tab>
         <b-tab title="From Youtube">
           <b-card-text>
-            <input class="form-control" @change="fromYoutube" name="youtubeUrl" type="text" placeholder="Paste video url here" v-model="youtubeUrl" />
+            <div class="input-group mb-3">
+              <input class="form-control" @change="fromYoutube" name="youtubeUrl" type="text" placeholder="Paste video url here" aria-describedby="button-youtube-go" v-model="youtubeUrl" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-youtube-go" style="border:1px solid #ced4da">
+                  <font-awesome-icon icon="arrow-circle-right" size="1x" />
+                </button>
+              </div>
+            </div>
           </b-card-text>
         </b-tab>
       </b-tabs>
