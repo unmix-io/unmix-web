@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-const baseUrl = "http://51.154.102.220:5000/"
+const baseUrl = "https://api.unmix.io/"
 
 export default {
   get(url, request) {
