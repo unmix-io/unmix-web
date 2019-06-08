@@ -2,7 +2,7 @@
   <div class="result">
     <div v-if="result">
         <p>Your file <i>{{result.result.name}}</i> has been processed - here are the results:</p>
-        
+        <img class="thumbnail" :src="result.result.thumbnail" />
         <div class="player">
             <a class="btn" @click="toggleBoth">
                 <font-awesome-icon v-show="!playing" icon="play-circle" size="7x" />
@@ -124,6 +124,12 @@ export default {
         text-decoration: none;
     }
 }
+
+.thumbnail {
+    max-height: 320px;
+    margin-bottom: 20px;
+}
+
 // .slider { display:flex; width:100%; flex:100px 500px 100px; align-items:stretch; }
 // .slider > div { flex-grow:1; }
 // .slider > svg { position:relative; top:6px; }

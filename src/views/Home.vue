@@ -34,6 +34,7 @@
         fill-duration="2"
       />
       <p>Please wait, our brain is working!</p>
+      <button @click='cancel' type="button" class="btn btn-outline-dark">Cancel</button>
     </div>
 
   </div>
@@ -54,7 +55,7 @@ export default {
           url: 'https://api.unmix.io/predict/file',
           maxFilesize: 20,
           acceptedFiles: 'audio/wav,audio/mpeg,.mp3,.wav,.amr',
-          sending: (file, xhr, formData) => {
+          sending: () => {
             this.loading = true;
           },
           success: (file, response) => {
@@ -81,6 +82,12 @@ export default {
         .then((response) => {
           this.$router.push(`/result/${response.identifier}`)
         })
+    },
+    cancel: function() {
+      this.loading = false;
+      this.indeterminate = false;
+      this.youtubeUrl = "";
+      this.progress = 0;
     }
   }
 }
