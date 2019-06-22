@@ -10,20 +10,7 @@
             </a>
             <div class="slider">
                 <div>
-                    <VueSlideBar
-                        v-model="sliderValue"
-                        :min="0"
-                        :max="100"
-                        :lineHeight="13"
-                        :labelStyles="{ color: '#4a4a4a', backgroundColor: '#FFFFFF' }"
-                        :processStyle="{ backgroundColor: '#2F3E4E' }"
-                        @input="sliderChanged">
-                        <template slot="tooltip" slot-scope="tooltip">
-                            <div class="tooltip-drag">
-                                Drag me!
-                            </div>
-                        </template>
-                    </VueSlideBar>
+                    <input class='fader' type='range' min='0' max='100' value='50' @change="sliderChanged" />
                 </div>
             </div>
             <br>
@@ -66,7 +53,8 @@ export default {
         this.$store.dispatch('loadResult', this.$route.params.id)
   },
   methods: {
-    sliderChanged: function(value) {
+    sliderChanged: function(element) {
+        var value = parseInt(element.srcElement.value);
         var volumeVocals = Math.min((100 - value) * 2 / 100, 1);
         var volumeInstrumental = Math.min(value * 2 / 100, 1);
         this.$refs.audioVocals.volume = volumeVocals;
@@ -130,10 +118,152 @@ export default {
     margin-bottom: 20px;
 }
 
-// .slider { display:flex; width:100%; flex:100px 500px 100px; align-items:stretch; }
-// .slider > div { flex-grow:1; }
-// .slider > svg { position:relative; top:6px; }
+.slider {
+    $input-bw: 1.5em;
+    $input-h: 2.25em;
+    $input-bg-c: #f1f1f1;
+    $input-bg-ct: rgba($input-bg-c, 0);
 
-.tooltip-drag { width:100px; height:28px; top:-8px; background: #FEFEFE; position:relative; }
-.tooltip-drag:after { content:' '; position:absolute; top:28px; left:50%; margin-left:-10px; border:10px solid #FFF; border-color:#FFF transparent transparent transparent; }
+    $ruler-line-w: .0625em;
+    $ruler-line-h: .625em;
+    $ruler-line-off: ($input-bw - $ruler-line-h)/2;
+    $ruler-line-c: #e6e6e6;
+    $ruler-fs: .75;
+
+    $track-u: 4em;
+    $track-k: 10;
+    $track-xtra: 1em;
+    $track-w: $track-k*$track-u + $track-xtra;
+    $track-h: .5em;
+
+    $thumb-w: 4em;
+    $thumb-h: 2em;
+    $thumb-r: .75em;
+
+    @mixin track() {
+    width: $track-w; height: $track-h;
+    border-radius: .1875em;
+    background: mix(rgba(#c7c7c7, .65), #f1f1f1);
+    }
+
+    @mixin track-focus() {
+    background: #e0e0e0;
+    }
+
+    @mixin thumb() {
+    border: none;
+    width: $thumb-w; height: $thumb-h;
+    border-radius: .5em;
+    box-shadow:
+        -.125em 0 .25em #928886, 
+        inset -1px 0 1px #fff;
+    background: 
+        radial-gradient(#fbfbfb 10%, rgba(#fbfbfb, .2) 10%, rgba(#ebe1e0, 0) 72%) 
+        no-repeat 50% 50%, 
+        radial-gradient(#{at 100% 50%}, #f5f5f5, #dcdcdc 71%, transparent 71%) 
+        no-repeat ($thumb-w - 2*$thumb-r) 50%, 
+        linear-gradient(90deg, #f5f5f5, #d0c8c6) no-repeat 100% 50%,
+        radial-gradient(#{at 0 50%}, #d0c6c5, #c6baba 71%, transparent 71%) 
+        no-repeat $thumb-r 50%, 
+        linear-gradient(90deg, #e3d9d8, #d0c6c5) no-repeat 0 50%,
+        linear-gradient(#cdc0c0, #fcf5ef, #fcf5ef, #cdc0c0);
+    background-size: 1.1*$thumb-r 100%;
+    }
+
+    input[type='range'] {
+    &, 
+    &::-webkit-slider-runnable-track, 
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+    }
+    
+    align-self: center;
+    margin: -$input-bw/2 0;
+    margin-top: 2vh;
+    border: solid $input-bw transparent;
+    padding: 0;
+    width: $track-w;
+    height: $input-h;
+    background: 
+        repeating-linear-gradient(90deg, 
+            $ruler-line-c, $ruler-line-c $ruler-line-w, 
+            transparent $ruler-line-w, transparent $track-u) 
+        no-repeat 50% $ruler-line-off border-box, 
+        repeating-linear-gradient(90deg, 
+            $ruler-line-c, $ruler-line-c $ruler-line-w, 
+            transparent $ruler-line-w, transparent $track-u) 
+        no-repeat 50% $ruler-line-off + $input-h + $input-bw border-box;
+    background-size: 
+        $track-k*(($track-u)*0.9) + $ruler-line-w $ruler-line-h, 
+        $track-k*(($track-u)) + $ruler-line-w $ruler-line-h, 
+        100% $input-h;
+    font-size: 1em;
+    cursor: pointer;
+    
+    &::-webkit-slider-runnable-track {
+        position: relative;
+        @include track();
+    }
+    &::-moz-range-track {
+        @include track();
+    }
+    &::-ms-track {
+        border: none;
+        @include track();
+        color: transparent;
+    }
+    
+    &::-ms-fill-lower { display: none; }
+    
+    &::-webkit-slider-thumb {
+        margin-top: ($track-h - $thumb-h)/2;
+        @include thumb();
+    }
+    &::-moz-range-thumb {
+        @include thumb();
+    }
+    &::-ms-thumb {
+        @include thumb();
+    }
+    
+    &::-webkit-slider-runnable-track, #track {
+        &:before, &:after {
+        position: absolute;
+        font: #{$ruler-fs*1em}/#{3*$track-u/$ruler-fs} 
+            trebuchet ms, arial, sans-serif;
+        }
+        &:before {
+        top: 50%; right: 100%;
+        transform: translate(50%, -50%) rotate(90deg) translate(0, 32%);
+        }
+        &:after {
+        left: 50%;
+        width: 3em;
+        word-spacing: 1em;
+        }
+    }
+    
+    &:nth-of-type(1), &:nth-of-type(6) {
+        &::-webkit-slider-runnable-track, #track {
+        &:after {
+            content: '+18 0 -18';
+        }
+        }
+    }
+    
+    &:focus {
+        outline: none;
+
+        &::-webkit-slider-runnable-track {
+        @include track-focus();
+        }
+        &::-moz-range-track {
+        @include track-focus();
+        }
+        &::-ms-track {
+        @include track-focus();
+        }
+    }
+    }
+}
 </style>
