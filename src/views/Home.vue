@@ -1,28 +1,23 @@
 <template>
   <div class="home">
-    <b-card no-body v-show="!loading">
-      <b-tabs card>
-        <b-tab title="Upload a file" active>
-          <b-card-text>
-            <div class="chooser" >
-              <vue2-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue2-dropzone>
-            </div>
-          </b-card-text>
-        </b-tab>
-        <b-tab title="From Youtube">
-          <b-card-text>
-            <div class="input-group mb-3">
-              <input class="form-control" @change="fromYoutube" name="youtubeUrl" type="text" placeholder="Paste video url here" aria-describedby="button-youtube-go" v-model="youtubeUrl" />
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button-youtube-go" style="border:1px solid #ced4da">
-                  <font-awesome-icon icon="arrow-circle-right" size="1x" />
-                </button>
-              </div>
-            </div>
-          </b-card-text>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+    <div id="upload-wrapper" no-body v-show="!loading">
+      <div id="file-container" class="upload-container">
+        <div class="chooser" >
+          <vue2-dropzone ref="" id="dropzone" :options="dropzoneOptions"></vue2-dropzone>
+        </div>
+      </div>
+      <div id="youtube-container" class="upload-container">
+        <h5>or paste a link from YouTube</h5>
+        <div class="input-group mb-3">
+          <input class="form-control" @change="fromYoutube" name="youtubeUrl" type="text" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" aria-describedby="button-youtube-go" v-model="youtubeUrl" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-youtube-go" style="border:1px solid #ced4da; background: #ced4da;">
+              <font-awesome-icon icon="arrow-circle-right" size="1x" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="loading" v-show="loading">
       <loading-progress
         :progress="progress"
@@ -99,5 +94,10 @@ export default {
     border-radius: 10px;
     border: 3px dashed #2c3e50;
     background:none;
+    color: white;
+  }
+
+  #youtube-container {
+    margin-top: 30px;
   }
 </style>

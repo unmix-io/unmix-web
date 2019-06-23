@@ -8,8 +8,12 @@
                 <font-awesome-icon v-show="!playing" icon="play-circle" size="7x" />
                 <font-awesome-icon v-show="playing" icon="pause-circle" size="7x" />
             </a>
-            <div class="slider">
-                <div>
+            <div class="slider container">
+                <div class="row">
+                    <div class="col" style="text-align: left;">Vocals Only</div>
+                    <div class="col" style="text-align: right;">Instrumental Only</div>
+                </div>                
+                <div class="row">
                     <input class='fader' type='range' min='0' max='100' value='50' @change="sliderChanged" />
                 </div>
             </div>
@@ -19,8 +23,6 @@
                 <audio ref="audioVocals" v-bind:src="result.result.vocals" controls></audio>
                 <audio ref="audioInstrumental" v-bind:src="result.result.instrumental" controls></audio>
             </div>
-            
-            
         </div>
         <br>
         <hr>
@@ -130,7 +132,7 @@ export default {
     $ruler-line-c: #e6e6e6;
     $ruler-fs: .75;
 
-    $track-u: 4em;
+    $track-u: 6em;
     $track-k: 10;
     $track-xtra: 1em;
     $track-w: $track-k*$track-u + $track-xtra;
