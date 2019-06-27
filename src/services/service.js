@@ -1,6 +1,8 @@
 import Vue from 'vue';
 
 const baseUrl = "https://api.unmix.io/"
+Vue.prototype.$api = baseUrl
+
 
 export default {
   get(url, request) {

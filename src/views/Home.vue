@@ -47,7 +47,7 @@ export default {
   data: function () {
     return {
       dropzoneOptions: {
-          url: 'https://api.unmix.io/predict/file',
+          url: this.$api + "predict/file",
           maxFilesize: 20,
           acceptedFiles: 'audio/wav,audio/mpeg,.mp3,.wav,.amr',
           sending: () => {
