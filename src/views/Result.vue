@@ -50,9 +50,15 @@ export default {
   computed: mapState({
     result: state => state.result
   }),
-  created() {
-      if(!this.$store.state.result)
+  watch: {
+    '$route.params.id': function () {
         this.$store.dispatch('loadResult', this.$route.params.id)
+    }
+  },
+  created() {
+      if(!this.$store.state.result) {
+        this.$store.dispatch('loadResult', this.$route.params.id)
+      }
   },
   methods: {
     sliderChanged: function(element) {
