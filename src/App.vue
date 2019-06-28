@@ -82,6 +82,7 @@ h6 {
 }
 
 #header {
+  margin-left: calc(100vw - 100%);
   padding: 40px 0 14px 0;
   .logo {
     width: 700px;
@@ -94,10 +95,12 @@ h6 {
 }
 
 .panel-wrapper {
-  max-width: 900px;
   margin: 0 auto;
+  max-width: 900px;
   .panel-container {
-    margin: 20px 10px;
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-bottom: 20px;
   }
 }
 
