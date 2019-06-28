@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <div id="header">
-      <router-link to="/">
-        <img class="logo" alt="unmix.io" src="./assets/logo-invert.svg">
-      </router-link>
-      <p class="slogan">Vocal and Instrumental Extraction from Music driven by AI.</p>
-    </div>
-    <div class="panel-wrapper">
-      <div class="panel-container">
-        <router-view/>
+    <div class="content">
+      <div id="header">
+        <router-link to="/">
+          <img class="logo" alt="unmix.io" src="./assets/logo-invert.svg">
+        </router-link>
+        <p class="slogan">Vocal and Instrumental Extraction from Music driven by AI.</p>
+      </div>
+      <div class="panel-wrapper">
+        <div class="panel-container">
+          <router-view/>
+        </div>
       </div>
     </div>
     <div id="footer">
@@ -23,21 +25,26 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap-vue/src/index.scss";
 
+@import "./colors.scss";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   padding: 0;
-  margin: 0;
-  background: #42b983;
-  color: #2c3e50;
+  background: $color-unmix-green-light;
+  color: $color-unmix-gray-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  position: relative;
-  margin-bottom: 60px;
 }
 
 a,
 a:hover {
-  color: #2c3e50;
+  color: $color-unmix-gray-dark;
 }
 
 h1,
@@ -49,12 +56,29 @@ h6 {
   color: white;
 }
 
-.panel-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  .panel-container {
-    margin: 20px 10px;
-  }
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $color-unmix-gray-dark;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
 }
 
 #header {
@@ -69,18 +93,24 @@ h6 {
   }
 }
 
+.panel-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  .panel-container {
+    margin: 20px 10px;
+  }
+}
+
 #footer {
-  position: fixed;
-  height: 40px;
   right: 0;
   bottom: 0;
   left: 0;
   padding: 8px;
-  background-color: #efefef;
+  background-color: $color-unmix-gray-light;
   text-align: center;
 
   a {
-    padding: 0 10px;;
+    padding: 0 10px;
   }
 }
 </style>
