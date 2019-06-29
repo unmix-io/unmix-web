@@ -98,9 +98,7 @@ h6 {
   margin: 0 auto;
   max-width: 900px;
   .panel-container {
-    margin-top: 20px;
-    margin-right: 10px;
-    margin-bottom: 20px;
+    margin: 20px 10px;
   }
 }
 
