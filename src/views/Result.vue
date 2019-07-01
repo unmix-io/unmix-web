@@ -17,7 +17,7 @@
             <div class="col" style="text-align: right;">Instrumental Only</div>
           </div>
           <div class="row">
-            <input class="fader" type="range" min="0" max="100" value="50" @change="sliderChanged">
+            <input class="fader" type="range" min="0" max="100" value="50" @input="sliderChanged" @change="sliderChanged">
           </div>
         </div>
         <br>
@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     sliderChanged: function(element) {
+      console.log(element.srcElement.value);
       var value = parseInt(element.srcElement.value);
       var volumeVocals = Math.min(((100 - value) * 2) / 100, 1);
       var volumeInstrumental = Math.min((value * 2) / 100, 1);
